@@ -24,11 +24,5 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
 
-aliyun:
-  oss:
-    endpoint: https://oss-cn-beijing.aliyuncs.com
-    accessKeyId: LTAI5tQhce7T5yNyhxYoJy9T
-    accessKeySecret: EIu9JZNfh76JZuBz5AXgdh2hLyQvj3
-    bucketName: qcq-wxl
 
 
