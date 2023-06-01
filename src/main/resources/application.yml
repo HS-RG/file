@@ -12,11 +12,23 @@ spring:
   cloud: #要注意缩进，错了会无法注册
     nacos:
       server-addr: localhost:8848 #nacos注册中心
+  #文件上传大小配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
 
 #mybatis配置（控制台输出，驼峰命名自动匹配）
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
+
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    accessKeyId: LTAI5tQhce7T5yNyhxYoJy9T
+    accessKeySecret: EIu9JZNfh76JZuBz5AXgdh2hLyQvj3
+    bucketName: qcq-wxl
 
 
