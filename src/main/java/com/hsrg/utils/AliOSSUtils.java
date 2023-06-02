@@ -3,7 +3,9 @@ package com.hsrg.utils;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +28,7 @@ public class AliOSSUtils {
     @Autowired
     private AliOSSProperties aliOSSProperties;
 
-    public String upload(MultipartFile file) throws IOException {
+    public String upload(MultipartFile file,String directory) throws IOException {
 
         String endpoint = aliOSSProperties.getEndpoint();
         String accessKeyId =aliOSSProperties.getAccessKeyId();
@@ -42,10 +44,13 @@ public class AliOSSUtils {
 
         //上传文件到 OSS
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-        ossClient.putObject(bucketName, fileName, inputStream);
+        String filePath=fileName;
+        if(directory!=null)
+            filePath = directory + "/" + filePath;
+        ossClient.putObject(bucketName,filePath, inputStream);
 
         //文件访问路径
-        String url = endpoint.split("//")[0] + "//" + bucketName + "." + endpoint.split("//")[1] + "/" + fileName;
+        String url = endpoint.split("//")[0] + "//" + bucketName + "." + endpoint.split("//")[1] + "/" + filePath;
         // 关闭ossClient
         ossClient.shutdown();
         return url;// 把上传到oss的路径返回
