@@ -25,6 +25,12 @@
             <artifactId>snowflake-spring-boot-starter</artifactId>
             <version>RELEASE</version>
         </dependency>
+        <!--        本地feign-->
+        <dependency>
+            <groupId>com.hsrg</groupId>
+            <artifactId>feign</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!--        nacos-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
