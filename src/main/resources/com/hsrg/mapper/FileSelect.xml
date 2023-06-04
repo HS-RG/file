@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hsrg.mapper.FileSelect">
+    <select id="selectByTagAndSearchString" resultType="com.hsrg.pojo.File">
+        select * from (
+            select * from file
+            <where>
+                <if test="file.yearTag!=null">year_tag=#{file.yearTag}</if>
+                <if test="file.courseTag!=null">and course_tag=#{file.courseTag}</if>
+                <if test="file.typeTag!=null">and type_tag=#{file.typeTag}</if>
+            </where>
+        ) temp
+        <where>
+            <if test="searchString!=null">
+                filename like concat('%',#{searchString},'%')
+                or title like concat('%',#{searchString},'%')
+                or context like concat('%',#{searchString},'%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+</mapper>

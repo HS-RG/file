@@ -1,57 +1,37 @@
 package com.hsrg.service.impl;
 
-import com.hsrg.mapper.FileInsert;
+import com.github.pagehelper.PageHelper;
+import com.hsrg.clients.UserClient;
+import com.hsrg.mapper.FileSelect;
 import com.hsrg.pojo.File;
+import com.hsrg.pojo.User;
 import com.hsrg.service.FileService;
-import com.hsrg.utils.AliOSSUtils;
-import lombok.extern.slf4j.Slf4j;
+
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import wiki.xsx.core.snowflake.config.Snowflake;
 
-import java.io.IOException;
-import java.net.URL;
-import java.time.LocalDateTime;
 
-@Slf4j
+import java.util.List;
+
+
 @Service
 public class FileServiceImpl implements FileService {
 
     @Autowired
-    FileInsert fileInsert;
+    private FileSelect fileSelect;
     @Autowired
-    Snowflake snowflake;
-    @Autowired
-    AliOSSUtils aliOSSUtils;
+    private UserClient userClient;
     @Override
-    public File uploadFile(File file){
-        file.setCreateTime(LocalDateTime.now());
-        file.setUpdateTime(LocalDateTime.now());
-        file.setFilename(file.getFile().getOriginalFilename());
-        file.setFileId(snowflake.nextId());
-        try {
-            file.setFileUrl(aliOSSUtils.upload(file.getFile(),"file"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        fileInsert.insert(file);
-        file.setFile(null);
-        log.info("上传文件：{}",file.getFilename());
-        log.info("URL：{}",file.getFileUrl());
-        return file;
-    }
-
-    @Override
-    public String uploadImage(MultipartFile image) {
-        String url;
-        try {
-            url = aliOSSUtils.upload(image, "image");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        log.info("上传文件：{}", image.getOriginalFilename());
-        log.info("URL：{}", url);
-        return url;
+    public List<File> QueryFileList(File file,String searchString,Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<File> files=fileSelect.selectByTagAndSearchString(file,searchString);
+        files.forEach(file1 -> {
+            User user=new User();
+            user.setUserId(file1.getUserId());
+            JSONObject jsonObject = JSONObject.fromObject(userClient.selectByUserId(user).getData());
+            file1.setUsername(jsonObject.get("username").toString());
+        });
+        return files;
     }
 }

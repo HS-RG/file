@@ -1,10 +1,9 @@
 package com.hsrg.service;
 
 import com.hsrg.pojo.File;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface FileService {
-    File uploadFile(File file);
-
-    String uploadImage(MultipartFile image);
+    List<File> QueryFileList(File file,String searchString,Integer pageNum, Integer pageSize);
 }
