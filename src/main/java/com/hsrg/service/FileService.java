@@ -1,9 +1,8 @@
 package com.hsrg.service;
 
 import com.hsrg.pojo.File;
-
-import java.util.List;
+import com.hsrg.pojo.PageBean;
 
 public interface FileService {
-    List<File> QueryFileList(File file,String searchString,Integer pageNum, Integer pageSize);
+    PageBean QueryFileList(File file, String searchString, Integer pageNum, Integer pageSize);
 }
