@@ -24,4 +24,9 @@ public class FileController {
         return Result.success(pageBean);
     }
 
+    @PostMapping("/file/QueryFileByFileId")
+    public Result QueryFileByFileId(@RequestBody File file){
+        return Result.success(fileService.QueryFileByFileId(file.getFileId()));
+    }
+
 }

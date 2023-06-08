@@ -41,4 +41,9 @@ public class FileServiceImpl implements FileService {
         PageBean pageBean = new PageBean(page.getTotal(),page.getResult());
         return pageBean;
     }
+
+    @Override
+    public File QueryFileByFileId(Long fileId) {
+        return fileSelect.selectByFileId(fileId);
+    }
 }

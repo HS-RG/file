@@ -5,4 +5,6 @@ import com.hsrg.pojo.PageBean;
 
 public interface FileService {
     PageBean QueryFileList(File file, String searchString, Integer pageNum, Integer pageSize);
+
+    File QueryFileByFileId(Long fileId);
 }
