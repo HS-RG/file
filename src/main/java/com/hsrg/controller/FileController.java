@@ -19,7 +19,11 @@ public class FileController {
     @PostMapping("/file/QueryFileList")
     public Result QueryFileList(@RequestParam Integer yearTag,@RequestParam String courseTag,@RequestParam String typeTag,
                                 @RequestParam String searchString,@RequestParam Integer pageNum,@RequestParam Integer pageSize){
-        PageBean pageBean = fileService.QueryFileList(new File(Year.of(yearTag),courseTag,typeTag),searchString,pageNum,pageSize);
+        Year yearTag1=null;
+        if(yearTag!=-1){
+            yearTag1 = Year.of(yearTag);
+        }
+        PageBean pageBean = fileService.QueryFileList(new File(yearTag1,courseTag,typeTag),searchString,pageNum,pageSize);
         return Result.success(pageBean);
     }
 
