@@ -29,4 +29,10 @@ public class FileController {
         return Result.success(fileService.QueryFileByFileId(file.getFileId()));
     }
 
+    @PostMapping("/file/DeleteOneFile")
+    public Result DeleteOneFile(@RequestBody File file){
+        fileService.DeleteOneFile(file.getFileId());
+        return Result.success();
+    }
+
 }

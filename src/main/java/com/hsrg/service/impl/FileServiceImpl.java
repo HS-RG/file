@@ -3,21 +3,17 @@ package com.hsrg.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hsrg.clients.UserClient;
+import com.hsrg.mapper.FileDelete;
 import com.hsrg.mapper.FileSelect;
 import com.hsrg.pojo.File;
 import com.hsrg.pojo.PageBean;
 import com.hsrg.pojo.User;
 import com.hsrg.service.FileService;
-
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 
 @Service
@@ -27,6 +23,8 @@ public class FileServiceImpl implements FileService {
     private FileSelect fileSelect;
     @Autowired
     private UserClient userClient;
+    @Autowired
+    private FileDelete fileDelete;
     @Override
     public PageBean QueryFileList(File file, String searchString, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum,pageSize);
@@ -45,5 +43,10 @@ public class FileServiceImpl implements FileService {
     @Override
     public File QueryFileByFileId(Long fileId) {
         return fileSelect.selectByFileId(fileId);
+    }
+
+    @Override
+    public void DeleteOneFile(Long fileId) {
+        fileDelete.DeleteOneFileByFileId(fileId);
     }
 }

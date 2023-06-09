@@ -7,4 +7,6 @@ public interface FileService {
     PageBean QueryFileList(File file, String searchString, Integer pageNum, Integer pageSize);
 
     File QueryFileByFileId(Long fileId);
+
+    void DeleteOneFile(Long fileId);
 }
