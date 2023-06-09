@@ -5,13 +5,13 @@
         select * from (
             select * from file
             <where>
-                <if test="file.yearTag!=null">year_tag=#{file.yearTag}</if>
-                <if test="file.courseTag!=null">and course_tag=#{file.courseTag}</if>
-                <if test="file.typeTag!=null">and type_tag=#{file.typeTag}</if>
+                <if test="file.yearTag.length()!=0">year_tag=#{file.yearTag}</if>
+                <if test="file.courseTag.length()!=0">and course_tag=#{file.courseTag}</if>
+                <if test="file.typeTag.length()!=0">and type_tag=#{file.typeTag}</if>
             </where>
         ) temp
         <where>
-            <if test="searchString!=null">
+            <if test="searchString.length()!=0">
                 filename like concat('%',#{searchString},'%')
                 or title like concat('%',#{searchString},'%')
                 or context like concat('%',#{searchString},'%')
