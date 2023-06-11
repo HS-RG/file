@@ -12,4 +12,7 @@ public interface FileSelect {
 
     @Select("select * from file where file_id=#{fileId}")
     File selectByFileId(Long fileId);
+
+    @Select("select * from file where user_id=#{userId}")
+    List<File> selectByUserId(Long userId);
 }

@@ -4,6 +4,8 @@ import com.hsrg.pojo.File;
 import com.hsrg.pojo.PageBean;
 import com.hsrg.pojo.Result;
 import com.hsrg.service.FileService;
+import com.hsrg.utils.JwtUtils;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +39,13 @@ public class FileController {
         fileService.DeleteOneFile(file.getFileId());
         return Result.success();
     }
+
+    @PostMapping("/file/GetMyFiles")
+    public Result GetMyFiles(@RequestHeader("Authorization")String jwt,@RequestParam Integer pageSize,@RequestParam Integer pageNum){
+        Claims claims = JwtUtils.parseJWT(jwt);
+        Long userId = (Long) claims.get("userId");
+        return Result.success(fileService.GetMyFiles(userId,pageSize,pageNum));
+    }
+
 
 }

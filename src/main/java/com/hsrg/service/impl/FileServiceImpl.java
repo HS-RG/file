@@ -49,4 +49,13 @@ public class FileServiceImpl implements FileService {
     public void DeleteOneFile(Long fileId) {
         fileDelete.DeleteOneFileByFileId(fileId);
     }
+
+    @Override
+    public PageBean GetMyFiles(Long userId, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<File> fileList = fileSelect.selectByUserId(userId);
+        Page<File> page = (Page<File>) fileList;
+        PageBean pageBean = new PageBean(page.getTotal(),page.getResult());
+        return pageBean;
+    }
 }
